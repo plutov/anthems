@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"net/url"
 	"strings"
 )
 
@@ -20,8 +21,9 @@ const (
 
 var (
 	supportedCountries = map[string]string{
-		"belarus": "ogg",
-		"ukraine": "oga",
+		"belarus":                  "ogg",
+		"ukraine":                  "oga",
+		"united states of america": "ogg",
 	}
 )
 
@@ -56,7 +58,7 @@ func handle(w http.ResponseWriter, r *http.Request) {
 		}
 
 		json.NewEncoder(w).Encode(DFResponse{
-			Speech: fmt.Sprintf(`<speak>Cool, %s. <audio src="%s/%s.%s"></audio>. That's it, do you want to listen another country anthem?</speak>`, country, s3Bucket, country, ext),
+			Speech: fmt.Sprintf(`<speak>Cool, %s. <audio src="%s/%s.%s"></audio>. That's it, do you want to listen another country anthem?</speak>`, country, s3Bucket, url.QueryEscape(country), ext),
 			Data: DFResponseData{
 				Google: DFResponseGoogle{
 					IsSsml: true,
