@@ -16,7 +16,7 @@ Production webhook address: https://anthems-19300.appspot.com
 
 ### Media
 
-All anthems are uploaded to this S3 bucket: https://s3.amazonaws.com/actions-on-google-anthems/
+This app uses anthems from https://anthemworld.com
 
 ### Conversation flow
 
