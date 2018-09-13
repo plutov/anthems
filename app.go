@@ -48,7 +48,7 @@ func handle(w http.ResponseWriter, r *http.Request) {
 			fileName = getFileName(country)
 		}
 
-		returnSSMLResponse(w, fmt.Sprintf(`Cool, %s. <audio src="%s/%s.mp3"></audio> That's it, do you want to listen another country anthem?`, country, sourceDir, url.QueryEscape(fileName)), true)
+		returnSSMLResponse(w, fmt.Sprintf(`Cool, %s. <audio src="%s/%s.mp3">Sorry, couldn't find the %s anthem.</audio> Do you want to listen another country anthem?`, country, sourceDir, url.QueryEscape(fileName), country), true)
 		return
 	}
 
