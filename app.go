@@ -74,7 +74,7 @@ func returnSSMLResponse(w http.ResponseWriter, msg string, expectResp bool) {
 		Speech: "<speak>" + msg + "</speak>",
 		Data: DFResponseData{
 			Google: DFResponseGoogle{
-				ExpectResponse: true,
+				ExpectResponse: expectResp,
 				IsSsml:         true,
 			},
 		},
