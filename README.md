@@ -1,4 +1,4 @@
-![anthems]((https://raw.githubusercontent.com/plutov/anthems/master/anthem.png)
+![anthems](https://raw.githubusercontent.com/plutov/anthems/master/anthem.png)
 
 ## Anthems
 
