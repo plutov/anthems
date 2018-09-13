@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
+	"unicode"
 )
 
 func init() {
@@ -25,14 +26,7 @@ func handle(w http.ResponseWriter, r *http.Request) {
 	dfErr := json.NewDecoder(r.Body).Decode(&dfReq)
 
 	if dfErr == nil && dfReq.Result.Action == "input.welcome" {
-		json.NewEncoder(w).Encode(DFResponse{
-			Speech: "<speak>" + welcomeMsg + "</speak>",
-			Data: DFResponseData{
-				Google: DFResponseGoogle{
-					IsSsml: true,
-				},
-			},
-		})
+		returnSSMLResponse(w, welcomeMsg, true)
 		return
 	}
 
@@ -51,41 +45,20 @@ func handle(w http.ResponseWriter, r *http.Request) {
 
 		fileName, replace := replaceMap[country]
 		if !replace {
-			fileName = ucfirst(country)
+			fileName = getFileName(country)
 		}
 
-		json.NewEncoder(w).Encode(DFResponse{
-			Speech: fmt.Sprintf(`<speak>Cool, %s. <audio src="%s/%s.mp3"></audio> That's it, do you want to listen another country anthem?</speak>`, country, sourceDir, url.QueryEscape(fileName)),
-			Data: DFResponseData{
-				Google: DFResponseGoogle{
-					IsSsml: true,
-				},
-			},
-		})
+		returnSSMLResponse(w, fmt.Sprintf(`Cool, %s. <audio src="%s/%s.mp3"></audio> That's it, do you want to listen another country anthem?`, country, sourceDir, url.QueryEscape(fileName)), true)
 		return
 	}
 
-	if dfErr == nil && dfReq.Result.Action == "input.no" {
-		json.NewEncoder(w).Encode(DFResponse{
-			Speech: "<speak>" + noMsg + "</speak>",
-			Data: DFResponseData{
-				Google: DFResponseGoogle{
-					IsSsml: true,
-				},
-			},
-		})
+	if dfErr == nil && dfReq.Result.Action == "country.country-no" {
+		returnSSMLResponse(w, noMsg, false)
 		return
 	}
 
-	if dfErr == nil && dfReq.Result.Action == "input.yes" {
-		json.NewEncoder(w).Encode(DFResponse{
-			Speech: "<speak>" + yesMsg + "</speak>",
-			Data: DFResponseData{
-				Google: DFResponseGoogle{
-					IsSsml: true,
-				},
-			},
-		})
+	if dfErr == nil && dfReq.Result.Action == "country.country-yes" {
+		returnSSMLResponse(w, yesMsg, true)
 		return
 	}
 
@@ -93,16 +66,45 @@ func handle(w http.ResponseWriter, r *http.Request) {
 }
 
 func returnAPIErrorMessage(w http.ResponseWriter) {
+	returnSSMLResponse(w, errMsg, true)
+}
+
+func returnSSMLResponse(w http.ResponseWriter, msg string, expectResp bool) {
 	json.NewEncoder(w).Encode(DFResponse{
-		Speech: "<speak>" + errMsg + "</speak>",
+		Speech: "<speak>" + msg + "</speak>",
 		Data: DFResponseData{
 			Google: DFResponseGoogle{
-				IsSsml: true,
+				ExpectResponse: true,
+				IsSsml:         true,
 			},
 		},
 	})
 }
 
-func handleGetAction(w http.ResponseWriter, r *http.Request, dfReq DFRequest) {
+func stringInSlice(a string, list []string) bool {
+	for _, b := range list {
+		if b == a {
+			return true
+		}
+	}
+	return false
+}
 
+// 1. Capitalize 1st letter in each word
+// 2. Replace spaces with underscores
+func getFileName(country string) string {
+	var words = strings.Split(country, " ")
+	var capWords []string
+	for _, w := range words {
+		var capWord string
+		for _, v := range w {
+			u := string(unicode.ToUpper(v))
+			capWord = u + w[len(u):]
+			break
+		}
+
+		capWords = append(capWords, capWord)
+	}
+
+	return strings.Join(capWords, "_")
 }

@@ -27,5 +27,6 @@ type DFResponseData struct {
 
 // DFResponseGoogle struct
 type DFResponseGoogle struct {
-	IsSsml bool `json:"isSsml"`
+	ExpectResponse bool `json:"expect_user_response"`
+	IsSsml         bool `json:"isSsml"`
 }

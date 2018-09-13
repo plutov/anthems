@@ -1,7 +1,5 @@
 package app
 
-import "unicode"
-
 var supportedCountries = []string{
 	"afghanistan", "albania", "algeria", "andorra", "angola", "anguilla",
 	"antarctica", "antigua and barbuda", "argentina", "armenia", "aruba", "australia", "austria",
@@ -10,7 +8,7 @@ var supportedCountries = []string{
 	"brazil", "british indian ocean territory", "brunei darussalam", "bulgaria", "burkina faso",
 	"burundi", "cambodia", "cameroon", "canada", "cape verde", "cayman islands",
 	"central african republic", "chad", "chile", "china", "christmas island",
-	"cocos (keeling) islands", "colombia", "comoros", "congo", "congo, the democratic republic of the",
+	"cocos (keeling) islands", "colombia", "comoros", "congo",
 	"cook islands", "costa rica", "cote d'ivoire", "croatia (hrvatska)", "cuba", "cyprus",
 	"czech republic", "denmark", "djibouti", "dominica", "dominican republic", "east timor",
 	"ecuador", "egypt", "el salvador", "equatorial guinea", "eritrea", "estonia", "ethiopia",
@@ -47,25 +45,14 @@ var supportedCountries = []string{
 	"zambia", "zimbabwe",
 }
 
+// Dialogflow returns formalized country name, but file name is different
 var replaceMap = map[string]string{
 	"argentina":                "Argentina_-_Long",
 	"united states of america": "U.S.A",
-}
-
-func stringInSlice(a string, list []string) bool {
-	for _, b := range list {
-		if b == a {
-			return true
-		}
-	}
-	return false
-}
-
-func ucfirst(str string) string {
-	for _, v := range str {
-		u := string(unicode.ToUpper(v))
-		return u + str[len(u):]
-	}
-
-	return ""
+	"russian federation":       "Russia",
+	"antigua and barbuda":      "Antigua_and_Barbuda",
+	"bosnia and herzegowina":   "Bosnia-Herzegovina",
+	"brazil":                   "Brazil_-_Long",
+	"congo":                    "Congo,_Republic_of",
+	"cote d'ivoire":            "Cote dvoire",
 }

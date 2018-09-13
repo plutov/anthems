@@ -1,8 +1,8 @@
+![anthems]((https://raw.githubusercontent.com/plutov/anthems/master/anthem.png)
+
 ## Anthems
 
-Anthems is an Action on Google to play a national anthem of selected country.
-
-Source: [List of national anthems](https://en.wikipedia.org/wiki/List_of_national_anthems)
+Anthems is an Action on Google to play a national anthem of a selected country.
 
 ### Deploy
 
