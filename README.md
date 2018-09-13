@@ -32,3 +32,11 @@ This app uses anthems from https://anthemworld.com
   - Bot: Great, which country do you want?
 - User: No.
   - Bot: Sure, thanks for talking to Anthems. Goodbye!
+
+### Tests
+
+To be able to test that files exist run:
+
+```
+go test -v
+```
