@@ -9,7 +9,7 @@ var supportedCountries = []string{
 	"burundi", "cambodia", "cameroon", "canada", "cape verde", "cayman islands",
 	"central african republic", "chad", "chile", "china", "christmas island",
 	"cocos islands", "colombia", "comoros", "congo",
-	"cook islands", "costa rica", "cote d'ivoire", "croatia", "cuba", "cyprus",
+	"cook islands", "costa rica", "croatia", "cuba", "cyprus",
 	"czech", "denmark", "djibouti", "dominica", "dominican republic", "east timor",
 	"ecuador", "egypt", "el salvador", "equatorial guinea", "eritrea", "estonia", "ethiopia",
 	"falkland islands", "faroe islands", "fiji", "finland", "france",
@@ -52,5 +52,4 @@ var replaceMap = map[string]string{
 	"bosnia and herzegowina":   "Bosnia-Herzegovina",
 	"brazil":                   "Brazil_-_Long",
 	"congo":                    "Congo,_Republic_of",
-	"cote d'ivoire":            "Cote dvoire",
 }

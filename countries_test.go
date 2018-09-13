@@ -9,7 +9,9 @@ import (
 )
 
 func TestCountriesFileExist(t *testing.T) {
-	for _, country := range supportedCountries {
+	for _, c := range supportedCountries {
+		country := c
+
 		t.Run(country, func(subtest *testing.T) {
 			subtest.Parallel()
 
@@ -25,8 +27,8 @@ func TestCountriesFileExist(t *testing.T) {
 			}
 
 			resp, err := httpClient.Get(url)
-			if err != nil || resp.StatusCode >= http.StatusBadRequest {
-				t.Errorf("unable to load url %s", url)
+			if err != nil || resp == nil || resp.StatusCode >= http.StatusBadRequest {
+				subtest.Fatalf("unable to load url %s, err: %v", url, err)
 			}
 			resp.Body.Close()
 		})

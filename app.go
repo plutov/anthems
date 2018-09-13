@@ -91,7 +91,6 @@ func stringInSlice(a string, list []string) bool {
 }
 
 // 1. Capitalize 1st letter in each word
-// 2. Replace spaces with underscores
 func getFileName(country string) string {
 	var words = strings.Split(country, " ")
 	var capWords []string
@@ -106,5 +105,5 @@ func getFileName(country string) string {
 		capWords = append(capWords, capWord)
 	}
 
-	return strings.Join(capWords, "_")
+	return strings.Join(capWords, " ")
 }
