@@ -3,7 +3,6 @@ package app
 import (
 	"fmt"
 	"net/http"
-	"net/url"
 	"testing"
 	"time"
 )
@@ -20,15 +19,15 @@ func TestCountriesFileExist(t *testing.T) {
 				fileName = getFileName(country)
 			}
 
-			url := fmt.Sprintf("%s/%s.mp3", sourceDir, url.QueryEscape(fileName))
+			url := fmt.Sprintf("%s/%s.mp3", sourceDir, fileName)
 
 			httpClient := http.Client{
-				Timeout: time.Duration(5 * time.Second),
+				Timeout: time.Duration(10 * time.Second),
 			}
 
-			resp, err := httpClient.Get(url)
+			resp, err := httpClient.Head(url)
 			if err != nil || resp == nil || resp.StatusCode >= http.StatusBadRequest {
-				subtest.Fatalf("unable to load url %s, err: %v", url, err)
+				subtest.Fatalf("url doesn't exist: %s, err: %v", url, err)
 			}
 			resp.Body.Close()
 		})

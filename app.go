@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"net/url"
 	"strings"
 	"unicode"
 )
@@ -48,7 +47,7 @@ func handle(w http.ResponseWriter, r *http.Request) {
 			fileName = getFileName(country)
 		}
 
-		returnSSMLResponse(w, fmt.Sprintf(`Cool, %s. <audio src="%s/%s.mp3">Sorry, couldn't find the %s anthem.</audio> Do you want to listen another country anthem?`, country, sourceDir, url.QueryEscape(fileName), country), true)
+		returnSSMLResponse(w, fmt.Sprintf(`Cool, %s. <audio src="%s/%s.mp3">Sorry, couldn't find the %s anthem.</audio> Do you want to listen another country anthem?`, country, sourceDir, fileName, country), true)
 		return
 	}
 
@@ -96,10 +95,14 @@ func getFileName(country string) string {
 	var capWords []string
 	for _, w := range words {
 		var capWord string
-		for _, v := range w {
-			u := string(unicode.ToUpper(v))
-			capWord = u + w[len(u):]
-			break
+		if w == "and" {
+			capWord = "and"
+		} else {
+			for _, v := range w {
+				u := string(unicode.ToUpper(v))
+				capWord = u + w[len(u):]
+				break
+			}
 		}
 
 		capWords = append(capWords, capWord)
