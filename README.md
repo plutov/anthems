@@ -9,7 +9,7 @@ Anthems is an Action on Google to play a national anthem of a selected country.
 This project is deployed to GCP:
 
 ```
-gcloud app deploy
+gcloud app deploy --version v1
 ```
 
 Production webhook address: https://anthems-19300.appspot.com
